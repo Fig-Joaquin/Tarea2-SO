@@ -67,11 +67,11 @@ int main() {
 
     delete[] output_data;
 
-    // Capturar el tiempo de finalización
+   // Capturar el tiempo de finalización
     auto end_time = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(end_time - start_time);
 
-    cout << "Se ha creado una NuevaImagen en escala de grises (paralela con OpenMP). Tiempo de ejecución: " << duration.count() / 1e6 << " segundos" << endl;
+    cout << "Se ha creado una NuevaImagen en escala de grises (paralela con OpenMP). Tiempo de ejecución: (0." << duration.count() << " segundos)" << endl;
 
     return 0;
 }

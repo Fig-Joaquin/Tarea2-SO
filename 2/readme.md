@@ -3,6 +3,8 @@ INSTRUCCIONES:
 
 ** AVISO **
 
+# Se recomienda hacer un make clean antes de ejecutar el make
+
 Para ejecutar correctamente el programa, se debe de seguir los siguientes pasos:
 
 Primero que nada los requisitos:
