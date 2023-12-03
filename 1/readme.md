@@ -1,5 +1,11 @@
 INSTRUCCIONES:
 
+
+** AVISO **
+
+# Si existen los archivos NuevaImagen.png y funcion_secuencial.exe se recomienda hacer un make clean para que la compilación y ejecución sea correcta #
+
+
 Para ejecutar correctamente el programa, se debe de seguir los siguientes pasos:
 
 Primero que nada los requisitos:
