@@ -1,4 +1,4 @@
-// Función usando threads
+// Programa usando threads
 
 #include <iostream>
 #include <opencv2/opencv.hpp>
