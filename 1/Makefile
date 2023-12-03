@@ -1,27 +1,16 @@
-# Nombre del ejecutable
-TARGET = funcion_secuencial.exe
-
-# Archivos fuente
-SOURCES = funcion_secuencial.cpp
-
-# Compilador
 CXX = g++
-
-# Opciones de compilación
 CXXFLAGS = -std=c++17 -Wall -Wextra
+LIBS = -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_imgcodecs
 
-# Bibliotecas de OpenCV
-LIBS = `pkg-config --cflags --libs opencv4`
+TARGET = funcion_secuencial
+SRC = funcion_secuencial.cpp
 
-# Reglas
 all: $(TARGET)
 
-$(TARGET): $(SOURCES)
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(LIBS)
-
-run: $(TARGET)
-	./$(TARGET)
+$(TARGET): $(SRC)
+	$(CXX) $(CXXFLAGS) -I /usr/include/opencv4 $< -o $@ $(LIBS)
 
 clean:
 	rm -f $(TARGET)
-	rm -f NuevaImagen.png
+
+.PHONY: all clean

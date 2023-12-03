@@ -6,16 +6,22 @@ using namespace cv;
 using namespace std;
 using namespace chrono;
 
-int main() {
+int main(int argc, char** argv) {
+    // Verificar si se proporcionan suficientes argumentos
+    if (argc != 4) {
+        cerr << "Uso: " << argv[0] << " <nombre_imagen_a_color> <nombre_imagen_escala_de_grises> <escala_de_grises>" << endl;
+        return -1;
+    }
+
     // Capturar el tiempo de inicio
     auto start_time = high_resolution_clock::now();
 
     // Leer la imagen a color
-    Mat image = imread("spider.png", IMREAD_COLOR);
+    Mat image = imread(argv[1], IMREAD_COLOR);
 
     // Verificar si la imagen se cargó correctamente
     if (image.empty()) {
-        cerr << "Un error ha ocurrido. Intentar con otra imagen." << endl;
+        cerr << "Error al cargar la imagen a color. Intentar con otra imagen." << endl;
         return -1;
     }
 
@@ -26,42 +32,28 @@ int main() {
     // Crear la imagen en escala de grises
     Mat grayImage(rows, cols, CV_8UC1);
 
-    // Convertir a escala de grises utilizando el método de luminosidad
+    // Obtener el factor de escala de grises del tercer argumento
+    double grayscaleFactor = stod(argv[3]);
+
+    // Convertir a escala de grises utilizando el método de luminosidad y el factor proporcionado
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             Vec3b pixel = image.at<Vec3b>(i, j);
-            uchar grayValue = 0.299 * pixel[2] + 0.587 * pixel[1] + 0.114 * pixel[0];
+            uchar grayValue = grayscaleFactor * pixel[2] + grayscaleFactor * pixel[1] + grayscaleFactor * pixel[0];
             grayImage.at<uchar>(i, j) = grayValue;
         }
     }
 
     // Guardar la imagen en escala de grises
-    imwrite("NuevaImagen.png", grayImage);
+    imwrite(argv[2], grayImage);
 
     // Capturar el tiempo de finalización
     auto end_time = high_resolution_clock::now();
 
     // Calcular la duración en segundos
-    auto duration = duration_cast<microseconds>(end_time - start_time);
+    auto duration = duration_cast<seconds>(end_time - start_time);
 
-    cout << "Se ha creado una NuevaImagen con escala de colores gris. El tiempo de ejecución ha sido: " << duration.count() << " microsegundos" << endl;
+    cout << "Se ha creado una nueva imagen en escala de grises con factor " << grayscaleFactor << ". El tiempo de ejecución ha sido: " << duration.count() << " segundos" << endl;
 
     return 0;
 }
-
-
-/*
-    g++ -std=c++17 -Wall -Wextra -I /usr/include/opencv4 "home/joaquin/Escritorio/Tarea2-SO/1/1/funcion_secuencial.cpp" -o "/home/joaquin/Escritorio/Tarea2-SO//1/funcion_secuencial.exe" -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_imgcodecs
-
-
- ** g++ -std=c++17 -Wall -Wextra -I /usr/include/opencv4 "/home/joaquin/Escritorio/Tarea2-SO/1/funcion_secuencial.cpp" -o "/home/joaquin/Escritorio/Tarea2-SO/1/funcion_secuencial.exe" -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_imgcodecs
-
-
-g++ -std=c++17 -Wall -Wextra -I /usr/include/opencv4 "/home/joaquin/Escritorio/Tarea2-SO/1/funcion_secuencial.cpp" -o "/home/joaquin/Escritorio/Tarea2-SO/1/funcion_secuencial.exe" -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_imgcodecs
-
-
-original:
-
-g++ -std=c++17 -Wall -Wextra -I /usr/include/opencv4 "/home/joaquin/Escritorio/Tarea2-SO/1/funcion_secuencial.cpp" -o "/home/joaquin/Escritorio/Tarea2-SO/1/funcion_secuencial.exe" -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_imgcodecs
-
-*/
